@@ -17,12 +17,16 @@
 #include <Qt3DExtras/qt3dwindow.h>
 #include <Qt3DExtras/qorbitcameracontroller.h>
 
+#include <QTcpSocket>
+#include <QTcpServer>
+
 #include <QtCore/QPropertyAnimation>
 
 #include <marble/MarbleWidget.h>
 
 #include "orbittransformcontroller.h"
 #include "videoplayer.h"
+#include "TelemetryData.pb.h"
 
 Qt3DCore::QEntity *createScene()
 {
@@ -123,5 +127,22 @@ int main(int argc, char *argv[])
     ui.map->setShowScaleBar(false);
     ui.map->centerOn({28.768730,41.260517,0 , Marble::GeoDataCoordinates::Unit::Degree , 5});
 
+    QTcpServer server(widget);
+    if(!server.listen(QHostAddress::AnyIPv4 , 2005))
+    {
+        return 1;
+    };
+    QObject::connect(&server , &QTcpServer::newConnection,
+    [&server]()
+    {
+        auto socket_sat = server.nextPendingConnection();
+        QObject::connect(socket_sat, &QIODevice::readyRead, [socket_sat]()
+        {
+            auto buffer = socket_sat->readAll();
+            TelemetryData telemetry_data;
+            telemetry_data.ParseFromArray(buffer.begin() , buffer.size());
+            qDebug() << telemetry_data.packet_number();
+        });
+    });
     app.exec();
 }

@@ -21,6 +21,9 @@ endif()
 find_package(LIBVLC REQUIRED)
 include_directories(${LIBVLC_INCLUDE_DIRS})
 
+find_package(Protobuf REQUIRED)
+include_directories(${Protobuf_INCLUDE_DIRS})
+
 find_package(Marble REQUIRED)
 include_directories(${MARBLE_INCLUDE_DIRS})
 
@@ -40,6 +43,7 @@ ui/main.ui
 src/main.cpp
 src/orbittransformcontroller.cpp
 src/videoplayer.cpp
+src/TelemetryData.pb.cc
 )
 add_executable(${CMAKE_PROJECT_NAME}  ${SAHIGUI_SRC})
 
@@ -74,3 +78,4 @@ target_link_libraries(
     target_link_libraries(${CMAKE_PROJECT_NAME} ${LIBVLC_LIBRARIES})
     target_link_libraries(${PROJECT_NAME} whereami)
     target_link_libraries(${PROJECT_NAME} Marble Qt5::Widgets)
+    target_link_libraries(${PROJECT_NAME} ${Protobuf_LIBRARIES})
