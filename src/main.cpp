@@ -19,6 +19,8 @@
 
 #include <QtCore/QPropertyAnimation>
 
+#include <marble/MarbleWidget.h>
+
 #include "orbittransformcontroller.h"
 #include "videoplayer.h"
 
@@ -114,6 +116,12 @@ int main(int argc, char *argv[])
 
     ui.graphicsView->setChart(chart);
     ui.graphicsView->setRenderHint(QPainter::Antialiasing);
+
+    ui.map->setProjection(Marble::Mercator);
+    ui.map->setMapThemeId("earth/openstreetmap/openstreetmap.dgml");
+    ui.map->setShowOverviewMap(false);
+    ui.map->setShowScaleBar(false);
+    ui.map->centerOn({28.768730,41.260517,0 , Marble::GeoDataCoordinates::Unit::Degree , 5});
 
     app.exec();
 }

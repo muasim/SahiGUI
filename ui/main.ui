@@ -101,8 +101,29 @@
     </rect>
    </property>
   </widget>
+  <widget class="Marble::MarbleWidget" name="map">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>330</y>
+     <width>461</width>
+     <height>581</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>The Earth</string>
+   </property>
+   <property name="whatsThis">
+    <string>The Marble widget displays a virtual globe.</string>
+   </property>
+  </widget>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>Marble::MarbleWidget</class>
+   <extends>QWidget</extends>
+   <header>MarbleWidget.h</header>
+  </customwidget>
   <customwidget>
    <class>QChartView</class>
    <extends>QGraphicsView</extends>

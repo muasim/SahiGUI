@@ -8,6 +8,7 @@ _ReSharper*
 *.stash
 *.vcxproj*
 *.sln
+*-workspace
 .vs/
 .vscode/
 build/
